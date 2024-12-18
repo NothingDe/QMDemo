@@ -12,7 +12,7 @@
 # @时间       2022-11-16 14:36:27
 # @备注
 #---------------------------------------------------------------------------------------
-QT       += core gui
+QT       += core gui widgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 CONFIG += c++11
@@ -35,7 +35,7 @@ SOURCES += \
 
 
 #  定义程序版本号
-VERSION = 1.1.1
+VERSION = 1.1.3
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 RC_ICONS = icon.ico             # 设置程序图标
 

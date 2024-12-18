@@ -10,6 +10,7 @@
 #ifndef SCREENRECT_H
 #define SCREENRECT_H
 
+#include <QPainterPath>
 #include <QWidget>
 
 class ScreenRect : public QWidget

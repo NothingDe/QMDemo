@@ -13,10 +13,9 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 CONFIG += c++11
 
 #  定义程序版本号
-VERSION = 1.1.0
+VERSION = 1.2.0
 TARGET = TestCrash_$$VERSION
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"   # 程序版本号
-DEFINES += APP_NAME=\\\"$$TARGET\\\"      # 程序名称字符串
 
 include($$PWD/CrashHandler/CrashHandler.pri)
 INCLUDEPATH += $$PWD/CrashHandler
