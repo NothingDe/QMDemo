@@ -12,7 +12,7 @@
 # @备注
 #---------------------------------------------------------------------------------------
 TEMPLATE += app
-QT += webenginewidgets
+QT += webenginewidgets widgets
 
 DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += main.cpp

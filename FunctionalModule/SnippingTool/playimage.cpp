@@ -1,5 +1,5 @@
 #include "playimage.h"
-
+#include <QDebug>
 #include <QPainter>
 
 PlayImage::PlayImage(QWidget* parent)
@@ -39,6 +39,7 @@ void PlayImage::updatePixmap(const QPixmap& pixmap)
  */
 void PlayImage::paintEvent(QPaintEvent* event)
 {
+    QWidget::paintEvent(event);
     if (!m_pixmap.isNull())
     {
         QPainter painter(this);
@@ -50,11 +51,13 @@ void PlayImage::paintEvent(QPaintEvent* event)
         QPixmap pixmap1 = QPixmap::fromImage(m_image).scaled(this->size(), Qt::KeepAspectRatio);
 #endif
         m_mutex.lock();
+
         QPixmap pixmap = m_pixmap.scaled(this->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);   // 这里采用SmoothTransformation，保证显示图像的清晰度
         m_mutex.unlock();
         int x = (this->width() - pixmap.width()) / 2;
         int y = (this->height() - pixmap.height()) / 2;
-        painter.drawPixmap(x, y, pixmap);
+
+        // Qt6需要指定绘制QPixmap的长宽，否则drawPixmap绘制存在bug
+        painter.drawPixmap(x, y, pixmap.width(), pixmap.height(), pixmap);
     }
-    QWidget::paintEvent(event);
 }
