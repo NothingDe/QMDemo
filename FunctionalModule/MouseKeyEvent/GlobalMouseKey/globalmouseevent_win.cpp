@@ -1,4 +1,4 @@
-#include "globalmouseevent.h"
+﻿#include "globalmouseevent.h"
 #if defined(Q_OS_WIN)
 #include <QCursor>
 #include <QDebug>
@@ -24,19 +24,19 @@ LRESULT CALLBACK LowLevelMouseProc(int nCode, WPARAM wParam, LPARAM lParam)
     switch (wParam)
     {
     case WM_LBUTTONDOWN:   // 鼠标左键按下
-        emit GlobalMouseEvent::getInstance() -> mouseEvent(new QMouseEvent(QEvent::MouseButtonPress, point, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier));
+        emit GlobalMouseEvent::getInstance() -> mouseEvent(QMouseEvent(QEvent::MouseButtonPress, point, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier));
         break;
     case WM_MOUSEMOVE:   // 鼠标移动
-        emit GlobalMouseEvent::getInstance() -> mouseEvent(new QMouseEvent(QEvent::MouseMove, point, Qt::NoButton, Qt::NoButton, Qt::NoModifier));
+        emit GlobalMouseEvent::getInstance() -> mouseEvent(QMouseEvent(QEvent::MouseMove, point, Qt::NoButton, Qt::NoButton, Qt::NoModifier));
         break;
     case WM_RBUTTONDOWN:   // 鼠标右键按下
-        emit GlobalMouseEvent::getInstance() -> mouseEvent(new QMouseEvent(QEvent::MouseButtonPress, point, Qt::RightButton, Qt::RightButton, Qt::NoModifier));
+        emit GlobalMouseEvent::getInstance() -> mouseEvent(QMouseEvent(QEvent::MouseButtonPress, point, Qt::RightButton, Qt::RightButton, Qt::NoModifier));
         break;
     case WM_RBUTTONUP:   // 鼠标右键抬起
-        emit GlobalMouseEvent::getInstance() -> mouseEvent(new QMouseEvent(QEvent::MouseButtonRelease, point, Qt::RightButton, Qt::RightButton, Qt::NoModifier));
+        emit GlobalMouseEvent::getInstance() -> mouseEvent(QMouseEvent(QEvent::MouseButtonRelease, point, Qt::RightButton, Qt::RightButton, Qt::NoModifier));
         break;
     case WM_LBUTTONUP:   // 鼠标左键抬起
-        emit GlobalMouseEvent::getInstance() -> mouseEvent(new QMouseEvent(QEvent::MouseButtonRelease, point, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier));
+        emit GlobalMouseEvent::getInstance() -> mouseEvent(QMouseEvent(QEvent::MouseButtonRelease, point, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier));
         break;
     case WM_MOUSEWHEEL:   // 鼠标滚轮
         {
@@ -47,10 +47,10 @@ LRESULT CALLBACK LowLevelMouseProc(int nCode, WPARAM wParam, LPARAM lParam)
             break;
         }
     case WM_MBUTTONUP:   // 鼠标中键释放
-        emit GlobalMouseEvent::getInstance() -> mouseEvent(new QMouseEvent(QEvent::MouseButtonRelease, point, Qt::MiddleButton, Qt::MiddleButton, Qt::NoModifier));
+        emit GlobalMouseEvent::getInstance() -> mouseEvent(QMouseEvent(QEvent::MouseButtonRelease, point, Qt::MiddleButton, Qt::MiddleButton, Qt::NoModifier));
         break;
     case WM_MBUTTONDOWN:   // 鼠标中键按下
-        emit GlobalMouseEvent::getInstance() -> mouseEvent(new QMouseEvent(QEvent::MouseButtonPress, point, Qt::MiddleButton, Qt::MiddleButton, Qt::NoModifier));
+        emit GlobalMouseEvent::getInstance() -> mouseEvent(QMouseEvent(QEvent::MouseButtonPress, point, Qt::MiddleButton, Qt::MiddleButton, Qt::NoModifier));
         break;
     case WM_XBUTTONDOWN:   // 鼠标功能键按下
         {
@@ -59,10 +59,10 @@ LRESULT CALLBACK LowLevelMouseProc(int nCode, WPARAM wParam, LPARAM lParam)
             switch (Button)
             {
             case XBUTTON1:   // 后退
-                emit GlobalMouseEvent::getInstance() -> mouseEvent(new QMouseEvent(QEvent::MouseButtonPress, point, Qt::XButton1, Qt::XButton1, Qt::NoModifier));
+                emit GlobalMouseEvent::getInstance() -> mouseEvent(QMouseEvent(QEvent::MouseButtonPress, point, Qt::XButton1, Qt::XButton1, Qt::NoModifier));
                 break;
             case XBUTTON2:   // 前进
-                emit GlobalMouseEvent::getInstance() -> mouseEvent(new QMouseEvent(QEvent::MouseButtonPress, point, Qt::XButton2, Qt::XButton2, Qt::NoModifier));
+                emit GlobalMouseEvent::getInstance() -> mouseEvent(QMouseEvent(QEvent::MouseButtonPress, point, Qt::XButton2, Qt::XButton2, Qt::NoModifier));
                 break;
             }
             break;
@@ -74,10 +74,10 @@ LRESULT CALLBACK LowLevelMouseProc(int nCode, WPARAM wParam, LPARAM lParam)
             switch (Button)
             {
             case XBUTTON1:
-                emit GlobalMouseEvent::getInstance() -> mouseEvent(new QMouseEvent(QEvent::MouseButtonRelease, point, Qt::XButton1, Qt::XButton1, Qt::NoModifier));
+                emit GlobalMouseEvent::getInstance() -> mouseEvent(QMouseEvent(QEvent::MouseButtonRelease, point, Qt::XButton1, Qt::XButton1, Qt::NoModifier));
                 break;
             case XBUTTON2:
-                emit GlobalMouseEvent::getInstance() -> mouseEvent(new QMouseEvent(QEvent::MouseButtonRelease, point, Qt::XButton2, Qt::XButton2, Qt::NoModifier));
+                emit GlobalMouseEvent::getInstance() -> mouseEvent(QMouseEvent(QEvent::MouseButtonRelease, point, Qt::XButton2, Qt::XButton2, Qt::NoModifier));
                 break;
             }
             break;
