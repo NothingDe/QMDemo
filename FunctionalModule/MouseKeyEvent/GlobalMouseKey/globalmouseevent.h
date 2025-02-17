@@ -32,8 +32,8 @@ public:
     static bool removeMouseEvent();    // 卸载全局鼠标事件监听器
 
 signals:
-    void mouseEvent(QMouseEvent event);
-    void wheelEvent(QWheelEvent event);
+    void mouseEvent(QSharedPointer<QMouseEvent> event);
+    void wheelEvent(QSharedPointer<QWheelEvent> event);
 
 private:
     GlobalMouseEvent() {}

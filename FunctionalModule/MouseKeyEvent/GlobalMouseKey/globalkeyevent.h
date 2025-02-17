@@ -3,6 +3,7 @@
 
 #include <QKeyEvent>
 #include <QObject>
+#include <QSharedPointer>
 
 /**
  *  全局鼠标事件单例信号类
@@ -21,7 +22,7 @@ public:
     static bool removeKeyEvent();    // 卸载全局键盘事件监听器
 
 signals:
-    void keyEvent(QKeyEvent event);
+    void keyEvent(QSharedPointer<QKeyEvent> event);
 
 private:
     GlobalKeyEvent() {}

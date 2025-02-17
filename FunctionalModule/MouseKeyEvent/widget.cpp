@@ -31,14 +31,14 @@ Widget::~Widget()
  * @brief       全局鼠标事件
  * @param event
  */
-void Widget::on_mouseEvent(QMouseEvent event)
+void Widget::on_mouseEvent(QSharedPointer<QMouseEvent> event)
 {
-    switch (event.type())
+    switch (event->type())
     {
     case QEvent::MouseButtonPress:   // 鼠标按下
         {
             QString but;
-            switch (event.button())
+            switch (event->button())
             {
             case Qt::LeftButton:
                 {
@@ -71,20 +71,20 @@ void Widget::on_mouseEvent(QMouseEvent event)
                     break;
                 }
             }
-            QString str = QString("鼠标%1按下：(x:%2, y:%3)").arg(but).arg(event.x()).arg(event.y());
+            QString str = QString("鼠标%1按下：(x:%2, y:%3)").arg(but).arg(event->x()).arg(event->y());
             ui->textEdit->append(str);
             break;
         }
     case QEvent::MouseMove:   // 鼠标移动
         {
-            QString str = QString("鼠标移动：(x:%1, y:%2)").arg(event.x()).arg(event.y());
+            QString str = QString("鼠标移动：(x:%1, y:%2)").arg(event->x()).arg(event->y());
             ui->textEdit->append(str);
             break;
         }
     case QEvent::MouseButtonRelease:   // 鼠标抬起
         {
             QString but;
-            switch (event.button())
+            switch (event->button())
             {
             case Qt::LeftButton:
                 {
@@ -117,7 +117,7 @@ void Widget::on_mouseEvent(QMouseEvent event)
                     break;
                 }
             }
-            QString str = QString("鼠标%1释放：(x:%2, y:%3)").arg(but).arg(event.x()).arg(event.y());
+            QString str = QString("鼠标%1释放：(x:%2, y:%3)").arg(but).arg(event->x()).arg(event->y());
             ui->textEdit->append(str);
             break;
         }
@@ -130,9 +130,10 @@ void Widget::on_mouseEvent(QMouseEvent event)
  * @brief       全局鼠标滚轮事件
  * @param event
  */
-void Widget::on_wheelEvent(QWheelEvent event)
+void Widget::on_wheelEvent(QSharedPointer<QWheelEvent> event)
 {
-    QString str = QString("鼠标滚轮：%1，(x:%2, y:%3)").arg(event.angleDelta().y() > 0 ? "向前" : "向后").arg(event.position().x()).arg(event.position().y());
+    qInfo() << event->angleDelta() << event->pixelDelta();
+    QString str = QString("鼠标滚轮：%1，(x:%2, y:%3)").arg(event->angleDelta().y() > 0 ? "向前" : "向后").arg(event->position().x()).arg(event->position().y());
     ui->textEdit->append(str);
 }
 
@@ -158,15 +159,15 @@ void Widget::on_but_mouser_clicked()
  * @brief        全局键盘事件
  * @param event
  */
-void Widget::on_keyEvent(QKeyEvent event)
+void Widget::on_keyEvent(QSharedPointer<QKeyEvent> event)
 {
     QMetaEnum type = QMetaEnum::fromType<QEvent::Type>();
     QMetaEnum key = QMetaEnum::fromType<Qt::Key>();
     QMetaEnum keyboard = QMetaEnum::fromType<Qt::KeyboardModifiers>();
-    QString str = QString("状态：[%1]\t按键：[%2]\t修饰：[%3]]").arg(type.valueToKey(event.type())).arg(key.valueToKey(event.key())).arg(QString(keyboard.valueToKeys(int(event.modifiers()))));
-    if (!event.text().isEmpty())
+    QString str = QString("状态：[%1]\t按键：[%2]\t修饰：[%3]]").arg(type.valueToKey(event->type())).arg(key.valueToKey(event->key())).arg(QString(keyboard.valueToKeys(int(event->modifiers()))));
+    if (!event->text().isEmpty())
     {
-        str += QString("\t字符：[%1]").arg(event.text());
+        str += QString("\t字符：[%1]").arg(event->text());
     }
     ui->textEdit->append(str);
 }

@@ -1,6 +1,7 @@
 ﻿#ifndef WIDGET_H
 #define WIDGET_H
 
+#include <QKeyEvent>
 #include <QMouseEvent>
 #include <QWidget>
 
@@ -19,10 +20,11 @@ public:
     Widget(QWidget* parent = nullptr);
     ~Widget();
 
+protected:
+    void on_mouseEvent(QSharedPointer<QMouseEvent> event);
+    void on_wheelEvent(QSharedPointer<QWheelEvent> event);
+    void on_keyEvent(QSharedPointer<QKeyEvent> event);
 private slots:
-    void on_mouseEvent(QMouseEvent event);
-    void on_wheelEvent(QWheelEvent event);
-    void on_keyEvent(QKeyEvent event);
     void on_but_mouseI_clicked();
 
     void on_but_mouser_clicked();

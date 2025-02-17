@@ -459,20 +459,26 @@ LRESULT CALLBACK LowLevelKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam)
     {
     case WM_KEYDOWN:   // 按下非系统键， 非系统键是未按下 ALT 键时按下的键
         {
-            emit GlobalKeyEvent::getInstance() -> keyEvent(QKeyEvent(QEvent::KeyPress, key, modifiers, kbdll->scanCode, kbdll->vkCode, nativeModifiers, text, autorep));
+            emit GlobalKeyEvent::getInstance() -> keyEvent(QSharedPointer<QKeyEvent>(new QKeyEvent(QEvent::KeyPress, key, modifiers, kbdll->scanCode, kbdll->vkCode, nativeModifiers, text, autorep)));
             break;
         }
     case WM_KEYUP:   // 当释放非系统键
-        emit GlobalKeyEvent::getInstance() -> keyEvent(QKeyEvent(QEvent::KeyRelease, key, modifiers, kbdll->scanCode, kbdll->vkCode, nativeModifiers, text, !autorep));
-        break;
+        {
+            emit GlobalKeyEvent::getInstance() -> keyEvent(QSharedPointer<QKeyEvent>(new QKeyEvent(QEvent::KeyRelease, key, modifiers, kbdll->scanCode, kbdll->vkCode, nativeModifiers, text, !autorep)));
+            break;
+        }
     case WM_SYSKEYDOWN:   // 当用户按下 F10 键 (激活菜单栏) 或按住 Alt 键，然后按另一个键时，发布到具有键盘焦点的窗口
-        qDebug() << "按下系统键 Alt";
-        emit GlobalKeyEvent::getInstance() -> keyEvent(QKeyEvent(QEvent::KeyPress, key, modifiers, kbdll->scanCode, kbdll->vkCode, nativeModifiers, text, autorep));
-        break;
+        {
+            qDebug() << "按下系统键 Alt";
+            emit GlobalKeyEvent::getInstance() -> keyEvent(QSharedPointer<QKeyEvent>(new QKeyEvent(QEvent::KeyPress, key, modifiers, kbdll->scanCode, kbdll->vkCode, nativeModifiers, text, autorep)));
+            break;
+        }
     case WM_SYSKEYUP:   // 当用户释放按下 Alt 键时按下的键
-        qDebug() << "释放系统键 Alt";
-        emit GlobalKeyEvent::getInstance() -> keyEvent(QKeyEvent(QEvent::KeyRelease, key, modifiers, kbdll->scanCode, kbdll->vkCode, nativeModifiers, text, !autorep));
-        break;
+        {
+            qDebug() << "释放系统键 Alt";
+            emit GlobalKeyEvent::getInstance() -> keyEvent(QSharedPointer<QKeyEvent>(new QKeyEvent(QEvent::KeyRelease, key, modifiers, kbdll->scanCode, kbdll->vkCode, nativeModifiers, text, !autorep)));
+            break;
+        }
     default:
         break;
     }
