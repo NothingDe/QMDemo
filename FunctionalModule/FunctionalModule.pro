@@ -21,6 +21,7 @@ SUBDIRS += QrCodeDemo                     # Qt封装qrencode的二维码生成�
 win32 {
 SUBDIRS += QMWidget                       # qt自定义窗口
 SUBDIRS += QMPlayer                       # 视频播放器界面
+SUBDIRS += ScanFile                       # 获取指定文件夹路径下所有文件大小信息
 }
 msvc {
 SUBDIRS += TestCrashHandler               # windows下Qt程序崩溃问题定位Demo（只在msvc编译下有效）
