@@ -19,6 +19,7 @@
 |   SnippingTool   | Qt实现截图工具                           | Windows、Linux |
 |  MouseKeyEvent   | Qt全局鼠标、键盘事件监听器               | Windows、Linux |
 |    QrCodeDemo    | Qt封装qrencode的二维码生成、显示控件     | 跨平台         |
+|     ScanFile     | 获取指定文件夹路径下所有文件大小信息     | windows        |
 
  
 
@@ -196,3 +197,14 @@ Qt自身的鼠标事件、事件过滤器一般当鼠标移出窗口或者遇见
 > 1. 支持使用编译好的静态库（MSVC2017-64）；
 
 ![image-20240502211734717](./FunctionalModule.assets/image-20240502211734717.png)
+
+
+
+### 1.12 ScanFile
+
+> 1. 需要先将ScanFile\ScanFileLib文件夹中工程编程生成动态库；
+> 2. 使用Qt界面调用动态库获取指定文件夹路径下所有文件大小信息；
+> 3. 使用线程池实现高性能查询文件大小功能；
+> 4. 由于使用的是windows api，所以只支持windows；
+
+![ScanFile-tuya](FunctionalModule.assets/ScanFile-tuya.gif)
