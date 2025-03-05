@@ -11,22 +11,26 @@
 #ifndef COMCHANGE_H
 #define COMCHANGE_H
 
-#include <QObject>
 #include <qabstractnativeeventfilter.h>
+#include <QObject>
 
 class ComChange : public QObject, public QAbstractNativeEventFilter
 {
     Q_OBJECT
 public:
     static ComChange* getInstance();
-    static QStringList getAvailablePort();          // 获取系统中所有可用的串口名
-    void setWid(quintptr wid);                     // 设置窗口句柄
+    static QStringList getAvailablePort();   // 获取系统中所有可用的串口名
+    void setWid(quintptr wid);               // 设置窗口句柄
 
 private:
-    explicit ComChange(QObject *parent = nullptr);
+    explicit ComChange(QObject* parent = nullptr);
 
 protected:
-    bool nativeEventFilter(const QByteArray &eventType, void *message, long *result);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    bool nativeEventFilter(const QByteArray& eventType, void* message, qintptr* result) override;
+#else
+    bool nativeEventFilter(const QByteArray& eventType, void* message, long* result);
+#endif
 
 signals:
     /**
@@ -39,7 +43,6 @@ signals:
 private:
     static ComChange* m_comChange;
     quintptr m_wid;
-
 };
 
-#endif // COMCHANGE_H
+#endif   // COMCHANGE_H

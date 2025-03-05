@@ -4,7 +4,6 @@
 #include <QComboBox>
 #include <QDateTime>
 #include <QDebug>
-#include <QDesktopWidget>
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QPushButton>
@@ -90,21 +89,20 @@ void MainWindow::on_newGrab(bool checked)
 void MainWindow::grabPixmap(QRect rect)
 {
 #if defined(Q_OS_WIN)
-    setWindowOpacity(0);                                                                             // 最好的方法是将当前窗口设置成完全透明
-    QDesktopWidget* desk = QApplication::desktop();                                                  // 获取桌面根窗口
-    QScreen* screen = QGuiApplication::primaryScreen();                                              // 获取默认屏幕
-    m_pixmap = screen->grabWindow(desk->winId(), rect.x(), rect.y(), rect.width(), rect.height());   // 抓取屏幕图像
-    ui->centralwidget->updatePixmap(m_pixmap);                                                       // 显示捕获的图像
+    setWindowOpacity(0);                                  // 最好的方法是将当前窗口设置成完全透明
+    QScreen* screen = QGuiApplication::primaryScreen();   // 获取默认屏幕
+    m_pixmap = screen->grabWindow(0, rect.x(), rect.y(), rect.width(), rect.height());
+    ui->centralwidget->updatePixmap(m_pixmap);   // 显示捕获的图像
     setWindowOpacity(1);
+
 #elif defined(Q_OS_LINUX)
     // linux下setWindowOpacity设置透明后截图还可以看到一个透明的边框，效果不是很好，所以使用hide
     this->hide();   // 截图之前将当前窗口隐藏，避免截取的图像中包含当前窗口，这种方法很慢，需要延时等待几百毫秒，否则还是会有当前窗口
     QThread::msleep(300);
-    QDesktopWidget* desk = QApplication::desktop();                                                  // 获取桌面根窗口
-    QScreen* screen = QGuiApplication::primaryScreen();                                              // 获取默认屏幕
-    m_pixmap = screen->grabWindow(desk->winId(), rect.x(), rect.y(), rect.width(), rect.height());   // 抓取屏幕图像
-    ui->centralwidget->updatePixmap(m_pixmap);                                                       // 显示捕获的图像
-    this->show();                                                                                    // 截图完成后显示窗口
+    QScreen* screen = QGuiApplication::primaryScreen();                                  // 获取默认屏幕
+    m_pixmap = screen->grabWindow(0, rect.x(), rect.y(), rect.width(), rect.height());   // 抓取屏幕图像
+    ui->centralwidget->updatePixmap(m_pixmap);                                           // 显示捕获的图像
+    this->show();                                                                        // 截图完成后显示窗口
 #endif
 }
 

@@ -20,17 +20,21 @@ class PortTest : public QWidget
     Q_OBJECT
 
 public:
-    explicit PortTest(QWidget *parent = nullptr);
+    explicit PortTest(QWidget* parent = nullptr);
     ~PortTest();
 
 protected:
-    bool nativeEvent(const QByteArray &eventType, void *message, long *result) override;
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    bool nativeEvent(const QByteArray& eventType, void* message, qintptr* result) override;
+#else
+    bool nativeEvent(const QByteArray& eventType, void* message, long* result) override;
+#endif
 
 private:
     void on_comStatus(QString name, bool flag);
 
 private:
-    Ui::PortTest *ui;
+    Ui::PortTest* ui;
 };
 
-#endif // PORTTEST_H
+#endif   // PORTTEST_H

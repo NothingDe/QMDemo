@@ -1,16 +1,18 @@
 ﻿#include "crashhandler.h"
 #include <qglobal.h>
 #include <QDateTime>
-#include <QMessageBox>
+#ifdef QT_GUI_LIB
+#    include <QMessageBox>
+#endif
 
-#if 1   //defined(_MSC_VER)
+#ifdef Q_OS_WIN   // windows系统使用
 #    if defined(_MSC_VER) && (_MSC_VER >= 1600) && (_MSC_VER <= 1900)
 #        pragma execution_character_set("utf-8")
 #    endif
 // clang-format off
 #include <Windows.h>   // Windows.h必须放在DbgHelp.h前，否则编译会报错
 #include <DbgHelp.h>
-#include <qapplication.h>
+#include <QCoreApplication>
 #include <qdir.h>
 // clang-format on
 
@@ -24,9 +26,10 @@
 LONG ApplicationCrashHandler(EXCEPTION_POINTERS* pException)
 {
     //创建 Dump 文件
-    QString path = qApp->applicationDirPath() + "/crash/";   // 文件保存路径
+    QString path = QCoreApplication::applicationDirPath() + "/crash/";   // 文件保存路径
     QDir().mkpath(path);
-    path += QString("%1_%2.dmp").arg(APP_NAME, QDateTime::currentDateTime().toString("yyyy-MM-dd HH-mm-ss"));   // 文件名
+    QString name = QCoreApplication::applicationName();
+    path += QString("%1_%2.dmp").arg(name, QDateTime::currentDateTime().toString("yyyy-MM-dd HH-mm-ss"));   // 文件名
 #    ifdef UNICODE
     LPCWSTR filePath = reinterpret_cast<LPCWSTR>(path.utf16());
 #    else
@@ -44,6 +47,9 @@ LONG ApplicationCrashHandler(EXCEPTION_POINTERS* pException)
         //写入Dump文件内容
         MiniDumpWriteDump(GetCurrentProcess(), GetCurrentProcessId(), hDumpFile, MiniDumpNormal, &dumpInfo, nullptr, nullptr);
     }
+
+    // 没有gui的程序不会触发弹窗
+#    ifdef QT_GUI_LIB
     //这里弹出一个错误对话框并退出程序
     EXCEPTION_RECORD* record = pException->ExceptionRecord;
     QString errCode(QString::number(quint64(record->ExceptionCode), 16));
@@ -52,6 +58,7 @@ LONG ApplicationCrashHandler(EXCEPTION_POINTERS* pException)
     QMessageBox::critical(nullptr, "不会吧，程序居然发生异常了~",
                           "<FONT size=4><div><b>对于发生的错误，表示诚挚的歉意</b><br/></div>" + QString("<div>错误代码：%1</div><div>错误地址：%2</div></FONT>").arg(errCode).arg(errAdr),
                           QMessageBox::Ok);
+#    endif
 
     return EXCEPTION_EXECUTE_HANDLER;
 }

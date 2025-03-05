@@ -11,10 +11,11 @@
 # @时间       2022-12-08 16:05:25
 # @备注
 #---------------------------------------------------------------------------------------
-QT       += core gui webenginewidgets
+QT       += core gui webenginewidgets  webenginecore
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-CONFIG += c++11
+
+CONFIG += c++14
 DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     main.cpp \

@@ -9,26 +9,32 @@
 #ifndef MWIDGETBASE_H
 #define MWIDGETBASE_H
 
-#include <QWidget>
 #include <qpushbutton.h>
+#include <QWidget>
 
 class MWidgetBase : public QWidget
 {
     Q_OBJECT
 public:
-    explicit MWidgetBase(QWidget *parent = nullptr);
+    explicit MWidgetBase(QWidget* parent = nullptr);
     ~MWidgetBase();
-    void setTitleBar(QWidget *titleBar);      // 传入窗口的自定义标题栏
+    void setTitleBar(QWidget* titleBar);   // 传入窗口的自定义标题栏
 
 private:
-    void init();          // 初始化
-    void thisEvent(QObject *watched, QEvent *event);      // 当前窗口事件处理
-    void titleBarEvent(QObject *watched, QEvent *event);  // 标题栏事件处理
-    bool winMouseEvent(MSG* msg,  long *result);          // 鼠标事件处理
+    void init();                                           // 初始化
+    void thisEvent(QObject* watched, QEvent* event);       // 当前窗口事件处理
+    void titleBarEvent(QObject* watched, QEvent* event);   // 标题栏事件处理
 
 protected:
-    bool eventFilter(QObject *watched, QEvent *event) override;
-    bool nativeEvent(const QByteArray &eventType, void *message, long *result) override;
+    bool eventFilter(QObject* watched, QEvent* event) override;
+
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    bool nativeEvent(const QByteArray& eventType, void* message, qintptr* result) override;
+    bool winMouseEvent(MSG* msg, qintptr* result);   // 鼠标事件处理
+#else
+    bool nativeEvent(const QByteArray& eventType, void* message, long* result) override;
+    bool winMouseEvent(MSG* msg, long* result);   // 鼠标事件处理
+#endif
 
 signals:
     /**
@@ -38,7 +44,7 @@ signals:
     void windowStateChanged(Qt::WindowStates windowStates);
 
 private:
-    QWidget* m_titleBar = nullptr;        // 标题栏
+    QWidget* m_titleBar = nullptr;   // 标题栏
 };
 
-#endif // MWIDGETBASE_H
+#endif   // MWIDGETBASE_H

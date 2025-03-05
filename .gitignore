@@ -53,3 +53,4 @@ compile_commands.json
 
 bin*/
 build/
+!FunctionalModule/ScanFile/lib/*

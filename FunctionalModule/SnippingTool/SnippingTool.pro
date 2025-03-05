@@ -10,9 +10,9 @@
 # @开发者     mhf
 # @邮箱       1603291350@qq.com
 # @时间       2022-11-16 14:36:27
-# @备注
+# @备注      Qt6默认高DPI会导致【窗口】截图功能无法使用
 #---------------------------------------------------------------------------------------
-QT       += core gui
+QT       += core gui widgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 CONFIG += c++11
@@ -35,7 +35,7 @@ SOURCES += \
 
 
 #  定义程序版本号
-VERSION = 1.1.1
+VERSION = 1.2.0
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 RC_ICONS = icon.ico             # 设置程序图标
 

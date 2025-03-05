@@ -17,7 +17,7 @@
 QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-CONFIG += c++11
+CONFIG += c++17
 DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     main.cpp \
@@ -30,7 +30,7 @@ include($$PWD/GlobalMouseKey/GlobalMouseKey.pri)
 INCLUDEPATH += $$PWD/GlobalMouseKey
 
 #  定义程序版本号
-VERSION = 1.8.0
+VERSION = 1.9.0
 DEFINES += APP_VERSION=\\\"$$VERSION\\\"
 
 contains(QT_ARCH, i386){        # 使用32位编译器
